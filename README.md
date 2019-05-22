@@ -1,4 +1,4 @@
-# lumavate_project
+# List Project for Lumavate Candidacy
 
 Please clone this repo and open the list.html file via your browser.
 
