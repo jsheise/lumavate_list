@@ -1,0 +1,85 @@
+<!doctype html>
+<html ng-app="list1" ng-cloak>
+<head>
+	<title>Music List</title>
+
+	<style>
+	<!--- ng-cloak added so that HTML does not appear before AngularJS called --->
+
+	[ng\:cloak], [ng-cloak], .ng-cloak {
+      display: none;
+    }
+
+    table {
+		border: 1px solid black;
+		width: 100%;
+		background-color: #CBCBCB;
+	}
+
+	td {
+		border: 1px solid black;
+		text-align: center;
+		background-color: #ECECEC;
+	}
+
+	</style>
+</head>
+
+<body>
+	<!-- include AngularJS and the .js file -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="js/list1.js"></script>
+
+	<!-- create div for list controller -->
+	<div ng-controller="listCtrl">
+		<h1 style="background-color: #D3D3D3; text-align: center; border-radius: 25px">Music List</h1>
+
+		<form name="entryForm" ng-submit="addEntry(newEntry)">
+		<input placeholder="new entry artist" type="text" name="artist" ng-model="newEntry.artist" ng-required="true"/>
+		<input placeholder="new entry song" type="text" name="song" ng-model="newEntry.song" ng-required="true"/>
+		<input placeholder="new entry album" type="text" name="album" ng-model="newEntry.album" ng-required="true"/>
+		<input placeholder="new entry year" type="text" name="year" ng-model="newEntry.year" ng-required="true"/>
+		<span>favorite?<input type="checkbox" name="favorite" ng-model="newEntry.favorite" /></span>
+		<input type="submit" value="Add" ng-disabled="entryForm.$invalid"/>
+
+		<table>
+			<thead>
+				<tr>
+					<!-- add headings for fields -->
+					<th>Artist</th>
+					<th>Song</th>
+					<th>Album</th>
+					<th>Year</th>
+					<th>Favorite?</th>
+
+				</tr>
+			</thead>
+			<!-- ng-repeat to list all entries in music -->
+			<tr ng-repeat="entry in music">
+				<td ng-show="!entry.edit">{{entry.artist}}</td> 
+				<td ng-show="entry.edit"><input ng-model="entry.artist"></td>
+				<td ng-show="!entry.edit">{{entry.song}}</td> 
+				<td ng-show="entry.edit"><input ng-model="entry.song"></td>
+				<td ng-show="!entry.edit">{{entry.album}}</td> 
+				<td ng-show="entry.edit"><input ng-model="entry.album"></td>
+				<td ng-show="!entry.edit">{{entry.year}}</td> 
+				<td ng-show="entry.edit"><input ng-model="entry.year"></td>
+				<td ng-show="!entry.edit" ng-if="entry.favorite">&#10004</td> 
+				<td ng-show="!entry.edit" ng-if="!entry.favorite">&#160</td>
+				<td ng-show="entry.edit"><input  type="checkbox" name="favorite" ng-model="entry.favorite" /></td>
+
+				<td ng-show="!entry.edit"><button  class="btn btn-primary" ng-click="entry.edit = true">Edit</button></td>
+				<td ng-show="entry.edit"><button class="btn btn-primary" ng-click="entry.edit = false">Done</button></td>
+
+
+				<td ng-show="!entry.edit"><button class="btn btn-primary" ng-click="deleteEntry(entry)">Delete</button></td>
+			</tr>
+		</table>
+		<br>
+		<span class="error-message" ng-show="entryForm.artist.$dirty && entryForm.artist.$error.required">Must Enter an Artist Name</span>
+		<span class="error-message" ng-show="entryForm.song.$dirty && entryForm.song.$error.required">Must Enter a Song Name</span>
+		<span class="error-message" ng-show="entryForm.album.$dirty && entryForm.album.$error.required">Must Enter an Album Name</span>
+		<span class="error-message" ng-show="entryForm.year.$dirty && entryForm.year.$error.required">Must Enter a Release Year</span>
+	</div>
+</body>
+</html>
