@@ -1,51 +1,59 @@
 <!doctype html>
+<script type="text/javascript" src="static/list1.js"></script>
 <html ng-app="list1" ng-cloak>
 <head>
 	<title>Music List</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
 
 	<style>
-	<!--- ng-cloak added so that HTML does not appear before AngularJS called --->
+		table {
+		  border: 1px solid black;
+		  width: 100%;
+		  background-color: #CBCBCB;
+		}
 
-	[ng\:cloak], [ng-cloak], .ng-cloak {
-      display: none;
-    }
+		th {
+		  font-family: Arial;
+			border: 1px solid black;
+			text-align: center;
+		}
 
-    table {
-		border: 1px solid black;
-		width: 100%;
-		background-color: #CBCBCB;
-	}
-
-	th {
-		font-family: Arial;
-	}
-
-	td {
-		border: 1px solid black;
-		text-align: center;
-		font-family: Arial;
-		background-color: #ECECEC;
-	}
-
+		td {
+		  border: 1px solid black;
+		  text-align: center;
+		  font-family: Arial;
+		  background-color: #ECECEC;
+		}
 	</style>
+
 </head>
 
 <body>
 	<!-- include AngularJS and the .js file -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-	<script src="js/list1.js"></script>
+
+	<!-- taken from bootstrap example -->
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+	  <h5 class="my-0 mr-md-auto font-weight-normal">Music List</h5>
+	</div>
+
+
+
+
+
 
 	<!-- create div for list controller -->
 	<div ng-controller="listCtrl">
-		<h1 style="font-family: Arial;background-color: #D3D3D3; text-align: center; border-radius: 25px">Music List</h1>
-
 		<form name="entryForm" ng-submit="addEntry(newEntry)">
 		<input placeholder="new entry artist" type="text" name="artist" ng-model="newEntry.artist" ng-required="true"/>
 		<input placeholder="new entry song" type="text" name="song" ng-model="newEntry.song" ng-required="true"/>
 		<input placeholder="new entry album" type="text" name="album" ng-model="newEntry.album" ng-required="true"/>
 		<input placeholder="new entry year" type="text" name="year" ng-model="newEntry.year" ng-required="true"/>
-		<span style="font-family: Arial;"">favorite?<input type="checkbox" name="favorite" ng-model="newEntry.favorite" /></span>
+		<span style="font-family: Arial;"">favorite? <input type="checkbox" name="favorite" ng-model="newEntry.favorite" /></span>
 		<input type="submit" value="Add" ng-disabled="entryForm.$invalid"/>
+
+		<br><br>
 
 		<table>
 			<thead>
@@ -56,28 +64,31 @@
 					<th>Album</th>
 					<th>Year</th>
 					<th>Favorite?</th>
-
+					<th>Edit?</th>
+					<th>Delete?</th>
 				</tr>
 			</thead>
 			<!-- ng-repeat to list all entries in music -->
 			<tr ng-repeat="entry in music">
-				<td ng-show="!entry.edit">{{entry.artist}}</td> 
+				<td ng-show="!entry.edit">{{entry.artist}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.artist"></td>
-				<td ng-show="!entry.edit">{{entry.song}}</td> 
+				<td ng-show="!entry.edit">{{entry.song}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.song"></td>
-				<td ng-show="!entry.edit">{{entry.album}}</td> 
+				<td ng-show="!entry.edit">{{entry.album}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.album"></td>
-				<td ng-show="!entry.edit">{{entry.year}}</td> 
+				<td ng-show="!entry.edit">{{entry.year}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.year"></td>
-				<td ng-show="!entry.edit" ng-if="entry.favorite">&#10004</td> 
+
+				<td ng-show="!entry.edit" ng-if="entry.favorite">&#10004</td>
 				<td ng-show="!entry.edit" ng-if="!entry.favorite">&#160</td>
+
 				<td ng-show="entry.edit"><input  type="checkbox" name="favorite" ng-model="entry.favorite" /></td>
 
-				<td ng-show="!entry.edit"><button  class="btn btn-primary" ng-click="entry.edit = true">Edit</button></td>
-				<td ng-show="entry.edit"><button class="btn btn-primary" ng-click="entry.edit = false">Done</button></td>
+				<td ng-show="!entry.edit"><button  class="btn btn-secondary" ng-click="entry.edit = true">Edit</button></td>
+				<td ng-show="entry.edit"><button class="btn btn-secondary" ng-click="entry.edit = false">Done</button></td>
 
 
-				<td ng-show="!entry.edit"><button class="btn btn-primary" ng-click="deleteEntry(entry)">Delete</button></td>
+				<td ng-show="!entry.edit"><button class="btn btn-secondary" ng-click="deleteEntry(entry)">Delete</button></td>
 			</tr>
 		</table>
 		<br>

@@ -1,0 +1,22 @@
+<!--- ng-cloak added so that HTML does not appear before AngularJS called --->
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none;
+  }
+
+table {
+  border: 1px solid black;
+  width: 100%;
+  background-color: #CBCBCB;
+}
+
+th {
+  font-family: Arial;
+}
+
+td {
+  border: 1px solid black;
+  text-align: center;
+  font-family: Arial;
+  background-color: #ECECEC;
+}
