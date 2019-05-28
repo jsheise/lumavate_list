@@ -1,6 +1,10 @@
 # List Project for Lumavate Candidacy
 
-Please clone this repo and open the list.html file via your browser.
+Steps to run (development server):
+ - clone repo
+ - cd into '/Candidate_Project'
+ - run listapp.py to start development server
+ - navigate to 'localhost:5000' in browser
 
 If time allows, I would pursue the following additions:
  - Angular Material for design
