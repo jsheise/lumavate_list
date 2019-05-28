@@ -23,3 +23,4 @@ Update 5/28/19 5:40pm:
  
 Update 5/28/19 7:00pm:
  - fixed above issue, see commits for details
+ - potentially worth noting that I am back to using CDN for Angular, as that was not an issue
