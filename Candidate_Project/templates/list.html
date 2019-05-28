@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-ng-app ng-cloak>
+<html ng-app="list1" ng-cloak>
 <head>
 	<title>Music List</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
@@ -34,7 +34,8 @@
 	<!-- include AngularJS and the .js file -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-	<script src="js/list1.js"></script>
+	<!-- <script src="js/list1.js"></script> -->
+	<script src="{{ url_for('static', filename='list1.js') }}"></script>
 
 	<!-- taken from bootstrap example -->
 	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -68,13 +69,13 @@
 			</thead>
 			<!-- ng-repeat to list all entries in music -->
 			<tr ng-repeat="entry in music">
-				<td ng-show="!entry.edit">{{entry.artist}}test</td>
+				<td ng-show="!entry.edit">{{entry.artist|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.artist"></td>
-				<td ng-show="!entry.edit">{{ entry.song}}</td>
+				<td ng-show="!entry.edit">{{ entry.song|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.song"></td>
-				<td ng-show="!entry.edit">{{ entry.album}}</td>
+				<td ng-show="!entry.edit">{{ entry.album|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.album"></td>
-				<td ng-show="!entry.edit">{{ entry.year}}</td>
+				<td ng-show="!entry.edit">{{ entry.year|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.year"></td>
 
 				<td ng-show="!entry.edit" ng-if="entry.favorite">&#10004</td>
