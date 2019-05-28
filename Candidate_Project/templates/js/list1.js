@@ -1,10 +1,10 @@
 var list1 = angular.module('list1', []);
 
 // have to configure angular to use {a a} bracket notation to avoid conflicts with Jinja engine
-app.config(['$interpolateProvider', function(interpolateProvider) {
-  $interpolateProvider.startSymbol('{a');
-  $interpolateProvider.startSymbol('a}');
-}]);
+// list1.config(['$interpolateProvider', function(interpolateProvider) {
+//   $interpolateProvider.startSymbol('{a');
+//   $interpolateProvider.endSymbol('a}');
+// }]);
 
 list1.controller('listCtrl', function($scope) {
 
