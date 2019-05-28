@@ -7,10 +7,10 @@ Steps to run (development server):
  - navigate to 'localhost:5000' in browser
 
 If time allows, I will pursue the following additions:
- - Angular Material for design
+ - implement PostgreSQL database for entry storage
+ - Angular Material for design (further on Lumavate tech stack)
+ - Redis caching (further on Lumavate tech stack)
  - use Discogs API to retrive album cover art
- - Redis caching
- - 
 
 Update 5/28/19 5:40pm:
  - back-end API with Flask has been added, though the Angular framework has seemingly stopped working due to the change
