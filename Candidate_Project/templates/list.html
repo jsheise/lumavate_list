@@ -8,5 +8,10 @@
 			<input type="text" name="newRating">
       <input type="submit" value="Add">
     </form>
-  </body>
+
+		{% for song in musicList %}
+			<p>{{song.song}} {{song.artist}} {{song.album}} {{song.year}} {{song.rating}}</p>
+			
+		{% endfor %}
+	</body>
 </html>
