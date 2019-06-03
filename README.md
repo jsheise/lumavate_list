@@ -1,4 +1,5 @@
 # List Project for Lumavate Candidacy
+This project currently implements AngularJS v1.7.8, Flask v1.0.3, and Python 2.7. 
 
 Steps to run (development server):
  - clone repo
