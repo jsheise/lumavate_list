@@ -55,6 +55,11 @@ class MusicEntry(db.Model):
 
 # retrieve list of music entries from database
 musicList = MusicEntry.query.all() # need to add musicList to render_template later
+editItem = {}
+
+editId = 0
+
+tempBool = False
 
 @app.route('/', methods=["POST", "GET"])
 def home():
@@ -63,14 +68,31 @@ def home():
         db.session.add(newEntry)
         db.session.commit()
     musicList = MusicEntry.query.all()
-    return render_template('list.html', musicList=musicList) #, entryData = EntryData)
+    return render_template('list.html', musicList=musicList, tempBool=tempBool) #, entryData = EntryData)
 
 @app.route("/update", methods=["POST"])
 def update():
-    newname = request.form.get("newname")
-    oldname = request.form.get("oldname")
-    editSelection = MusicEntry.query.filter_by(song=oldname).first()
-    editSelection.song = newname
+    editId = request.form.get("idNum")
+    editSelection = MusicEntry.query.filter_by(id=editId).first()
+    tempBool = False
+    # editSelection.song = newname
+    # db.session.commit()
+    return render_template('entryUpdate.html', editItem=editSelection)
+
+@app.route("/update2", methods=["POST"])
+def update2():
+    editId = request.form.get("idNum")
+    updatedSongName = request.form.get("updatedSongName")
+    updatedArtistName = request.form.get("updatedArtistName")
+    updatedAlbumTitle = request.form.get("updatedAlbumTitle")
+    updatedYear = request.form.get("updatedYear")
+    updatedRating = request.form.get("updatedRating")
+    editSelection = MusicEntry.query.filter_by(id=editId).first()
+    editSelection.song = updatedSongName
+    editSelection.artist = updatedArtistName
+    editSelection.album = updatedAlbumTitle
+    editSelection.year = updatedYear
+    editSelection.rating_0_5 = updatedRating
     db.session.commit()
     return redirect("/")
 

@@ -9,7 +9,7 @@
 			    display: none;
 		  }
 
-			table {
+			/* table {
 			  border: 1px solid black;
 			  width: 100%;
 			  background-color: #CBCBCB;
@@ -24,7 +24,7 @@
 			  text-align: center;
 			  font-family: Arial;
 			  background-color: #ECECEC;
-			}
+			} */
 		</style>
 	</head>
   <body>
@@ -51,30 +51,31 @@
 	    </form>
 
 
-		<table>
+		<table class="table">
 			<thead>
 				<tr>
 					<!-- add headings for fields -->
+					<th>ID</th>
 					<th>Song</th>
 					<th>Artist</th>
 					<th>Album</th>
 					<th>Year</th>
 					<th>Rating</th>
-					<th>Edit?</th>
-					<th>Delete?</th>
+					<th></th>
+					<th></th>
 				</tr>
 
 				{% for entry in musicList %}
 					<tr>
+						<td>{{entry.id}}</td>
 						<td>{{entry.song}}</td>
-						<!-- <td>{{entry.artist}}</td>
+						<td>{{entry.artist}}</td>
 						<td>{{entry.album}}</td>
 						<td>{{entry.year}}</td>
-						<td>{{entry.rating_0_5}}</td> -->
+						<td>{{entry.rating_0_5}}</td>
 						<td>
 							<form method="POST" action="./update">
-						    <input type="hidden" value="{{entry.song}}" name="oldname">
-						    <input type="text" value="{{entry.song}}" name="newname">
+								<input type="hidden" value="{{entry.id}}" name="idNum">
 						    <input type="submit" value="Update">
 						  </form>
 						</td>
@@ -90,26 +91,6 @@
 				{% endfor %}
 			</thead>
 		</table>
-
-		<br><br>
-
-		<table>
-			<thead>
-				<tr>
-					<th>Artist</th>
-					<th>Song</th>
-					<th>Album</th>
-					<th>Year</th>
-				</tr>
-			</thead>
-			<tr ng-repeat="entry in music">
-				<td>{{ entry.artist|angular }}</td>
-				<td>{{ entry.song|angular }}</td>
-				<td>{{ entry.album|angular }}</td>
-				<td>{{ entry.year|angular }}</td>
-			</tr>
-		</table>
-</div>
 
 	</body>
 </html>

@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title>Music List</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
+		<!-- <script type="text/javascript" src="js/angular.min.js"></script> -->
+		<style>
+
+			[ng\:cloak], [ng-cloak], .ng-cloak {
+			    display: none;
+		  }
+
+			/* table {
+			  border: 1px solid black;
+			  width: 100%;
+			  background-color: #CBCBCB;
+			}
+			th {
+			  font-family: Arial;
+				border: 1px solid black;
+				text-align: center;
+			}
+			td {
+			  border: 1px solid black;
+			  text-align: center;
+			  font-family: Arial;
+			  background-color: #ECECEC;
+			} */
+		</style>
+	</head>
+  <body>
+		<!-- include AngularJS and the .js file -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+		<!-- <script src="js/list1.js"></script> -->
+		<script src="{{ url_for('static', filename='list1.js') }}"></script>
+
+		<!-- taken from bootstrap example -->
+		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+		  <h5 class="my-0 mr-md-auto font-weight-normal">Edit Entry</h5>
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<!-- add headings for fields -->
+					<th>ID</th>
+					<th>Song</th>
+					<th>Artist</th>
+					<th>Album</th>
+					<th>Year</th>
+					<th>Rating</th>
+				</tr>
+
+				<tr>
+					<td>{{editItem.id}}</td>
+					<td>{{editItem.song}}</td>
+					<td>{{editItem.artist}}</td>
+					<td>{{editItem.album}}</td>
+					<td>{{editItem.year}}</td>
+					<td>{{editItem.rating_0_5}}</td>
+				</tr>
+			</thead>
+		</table>
+
+		<br><br>
+		<h3>New Data for Entry Form</h3>
+		<form method="POST" action="./update2">
+			<input type="hidden" value="{{editItem.id}}" name="idNum">
+			<input type="text" name="updatedSongName" value="{{editItem.song}}">
+			<input name="updatedArtistName" value="{{editItem.artist}}">
+			<input name="updatedAlbumTitle" value="{{editItem.album}}">
+			<input name="updatedYear" value="{{editItem.year}}">
+			<input name="updatedRating" value="{{editItem.rating_0_5}}">
+			<input type="submit" value="Update">
+		</form>
+
+
+		<!-- <form name="entryForm" ng-submit="addEntry(newEntry)">
+		<input placeholder="new entry artist" type="text" name="artist" ng-model="newEntry.artist" ng-required="true"/>
+		<input placeholder="new entry song" type="text" name="song" ng-model="newEntry.song" ng-required="true"/>
+		<input placeholder="new entry album" type="text" name="album" ng-model="newEntry.album" ng-required="true"/>
+		<input placeholder="new entry year" type="text" name="year" ng-model="newEntry.year" ng-required="true"/>
+		<span style="font-family: Arial;"">favorite? <input type="checkbox" name="favorite" ng-model="newEntry.favorite" /></span>
+		<input type="submit" value="Add" ng-disabled="entryForm.$invalid"/> -->
+
+	</body>
+</html>
