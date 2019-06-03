@@ -19,6 +19,7 @@ Triangle(app) # allows for AngularJS expressions filter
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # TEMP - set database URI for local testing of database entries
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres:///music_db"
+app.config.from_object(os.environ['APP_SETTINGS'])
 heroku = Heroku(app) # environment variables taken care of and database config set up
 db = SQLAlchemy(app) # database object
 
@@ -123,7 +124,7 @@ def delete():
 #     return 'added'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
 # BELOW IS USING flask_restful LIBRARY
 # EntryData = EntryData
