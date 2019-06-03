@@ -6,13 +6,28 @@ var list1 = angular.module('list1', []);
 //   $interpolateProvider.endSymbol('a}');
 // }]);
 
-list1.controller('listCtrl', function($scope) {
+list1.controller('listCtrl', function($scope, $http) {
 
   $scope.music = [
     {artist: "Bowling for Soup", song: "1985", album: "A Hangover You Don't Deserve", year: "2004", favorite: false, edit: false },
     {artist: "Periphery", song: "Muramasa", album: "Periphery II: This Time It's Personal", year: "2012", favorite: true, edit: false},
     {artist: "Soundgarden", song: "Black Hole Sun", album: "Superunknown", year: "1994", favorite: false, edit: false }
   ];
+
+  $scope.newEntry = {};
+
+  $scope.addEntry2 = function(newEntry) {
+    $http({
+      method: 'POST',
+      url: '/addEntry',
+      data: { newEntry: $scope.newEntry }
+    }).then(function(response)) {
+      $scope.showList();
+      $scope.newEntry = {};
+    }, function(error) {
+                console.log(error);
+    });
+  }
 
   // Receives the new item entered in the input box and puts
   // it on the end of the array

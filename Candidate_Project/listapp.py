@@ -32,12 +32,12 @@ class MusicEntry(db.Model):
     year = db.Column(db.Integer())
     rating_0_5 = db.Column(db.Integer())
 
-    def __init__(self, song, artist, album, year, rating): # FINISH THIS LATER WITH MORE UNDERSTANDING
+    def __init__(self, song, artist, album, year, rating_0_5): # FINISH THIS LATER WITH MORE UNDERSTANDING
         self.song = song
         self.artist = artist
         self.album = album
         self.year = year
-        self.rating = rating
+        self.rating_0_5 = rating_0_5
 
     # "define how to represent our book object as a string. This allows us to do things like print(book), and see meaningful output."
     def __repr__(self):
@@ -50,7 +50,7 @@ class MusicEntry(db.Model):
             'artist': self.artist,
             'album': self.album,
             'year':self.year,
-            'rating':self.rating
+            'rating_0_5':self.rating_0_5
         }
 
 # retrieve list of music entries from database
@@ -58,11 +58,29 @@ musicList = MusicEntry.query.all() # need to add musicList to render_template la
 
 @app.route('/', methods=["POST", "GET"])
 def home():
-    if request.form:
-        newEntry = MusicEntry(song=request.form.get("newSongName"), artist=request.form.get("newArtist"), album=request.form.get("newAlbum"), year=request.form.get("newYear"), rating=request.form.get("newRating"))
-        db.session.add(newEntry)
-        db.session.commit()
+    # if request.form:
+    #     newEntry = MusicEntry(song=request.form.get("newSongName"), artist=request.form.get("newArtist"), album=request.form.get("newAlbum"), year=request.form.get("newYear"), rating_0_5=request.form.get("newRating"))
+    #     db.session.add(newEntry)
+    #     db.session.commit()
     return render_template('list.html', musicList=musicList) #, entryData = EntryData)
+
+@app.route('/addEntry', methods=["POST"])
+def addEntry():
+    try:
+        json_data = request.json['newEntry']
+        songName = json_data[song]
+        artistName = json_data[artist]
+        albumName = json_data[album]
+        yearNum = json_data[year]
+        ratingNum = json_data[rating]
+
+        newMusicEntry = MusicEntry(song=songName, artist=artistName, album=albumName, year=yearNum, rating_0_5=ratingNum)
+        db.session.add(newMusicEntry)
+        db.session.commit()
+        return render_template('list.html', musicList=musicList) #, entryData = EntryData)
+    except Exception(e):
+        return str(e)
+    return 'added'
 
 if __name__ == '__main__':
     app.run(debug=True)
