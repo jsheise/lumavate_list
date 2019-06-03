@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<title>Music List</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
+		<!-- <script type="text/javascript" src="js/angular.min.js"></script> -->
+		<style>
+
+			[ng\:cloak], [ng-cloak], .ng-cloak {
+			    display: none;
+		  }
+
+			table {
+			  border: 1px solid black;
+			  width: 100%;
+			  background-color: #CBCBCB;
+			}
+			th {
+			  font-family: Arial;
+				border: 1px solid black;
+				text-align: center;
+			}
+			td {
+			  border: 1px solid black;
+			  text-align: center;
+			  font-family: Arial;
+			  background-color: #ECECEC;
+			}
+		</style>
+	</head>
+  <body>
+		<!-- include AngularJS and the .js file -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+		<!-- <script src="js/list1.js"></script> -->
+		<script src="{{ url_for('static', filename='list1.js') }}"></script>
+
+		<!-- taken from bootstrap example -->
+		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+		  <h5 class="my-0 mr-md-auto font-weight-normal">Music List</h5>
+		</div>
+
+
+		<div ng-controller="listCtrl">
+	    <form method="POST" action="/" ng-submit="addEntry2(newEntry)">
+	      <input type="text" placeholder="new entry song" name="newSongName" ng-model="newEntry.song">
+				<input type="text" placeholder="new entry artist" name="newArtist" ng-model="newEntry.artist">
+				<input type="text" placeholder="new entry album" name="newAlbum" ng-model="newEntry.album">
+				<input type="text" placeholder="new entry year" name="newYear" ng-model="newEntry.year">
+				<input type="text" placeholder="new entry rating (0-5)" name="newRating" ng-model="newEntry.rating">
+	      <input class="btn btn-primary" type="submit" value="Add">
+	    </form>
+
+
+		<table>
+			<thead>
+				<tr>
+					<!-- add headings for fields -->
+					<th>Song</th>
+					<th>Artist</th>
+					<th>Album</th>
+					<th>Year</th>
+					<th>Rating</th>
+					<th>Edit?</th>
+					<th>Delete?</th>
+				</tr>
+
+				{% for entry in musicList %}
+					<tr>
+						<td>{{entry.song}}</td>
+						<!-- <td>{{entry.artist}}</td>
+						<td>{{entry.album}}</td>
+						<td>{{entry.year}}</td>
+						<td>{{entry.rating_0_5}}</td> -->
+						<td>
+							<form method="POST" action="./update">
+						    <input type="hidden" value="{{entry.song}}" name="oldname">
+						    <input type="text" value="{{entry.song}}" name="newname">
+						    <input type="submit" value="Update">
+						  </form>
+						</td>
+
+						<td>
+							<form method="POST" action="./delete">
+							  <input type="hidden" value="{{entry.song}}" name="name">
+							  <input type="submit" value="Delete">
+							</form>
+						</td>
+					</tr>
+
+				{% endfor %}
+			</thead>
+		</table>
+
+		<br><br>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Artist</th>
+					<th>Song</th>
+					<th>Album</th>
+					<th>Year</th>
+				</tr>
+			</thead>
+			<tr ng-repeat="entry in music">
+				<td>{{ entry.artist|angular }}</td>
+				<td>{{ entry.song|angular }}</td>
+				<td>{{ entry.album|angular }}</td>
+				<td>{{ entry.year|angular }}</td>
+			</tr>
+		</table>
+</div>
+
+	</body>
+</html>

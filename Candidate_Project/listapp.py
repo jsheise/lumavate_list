@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 # from flask_restful import Resource, Api
 from flask_triangle import Triangle
 
@@ -58,29 +58,47 @@ musicList = MusicEntry.query.all() # need to add musicList to render_template la
 
 @app.route('/', methods=["POST", "GET"])
 def home():
-    # if request.form:
-    #     newEntry = MusicEntry(song=request.form.get("newSongName"), artist=request.form.get("newArtist"), album=request.form.get("newAlbum"), year=request.form.get("newYear"), rating_0_5=request.form.get("newRating"))
-    #     db.session.add(newEntry)
-    #     db.session.commit()
+    if request.form:
+        newEntry = MusicEntry(song=request.form.get("newSongName"), artist=request.form.get("newArtist"), album=request.form.get("newAlbum"), year=request.form.get("newYear"), rating_0_5=request.form.get("newRating"))
+        db.session.add(newEntry)
+        db.session.commit()
+    musicList = MusicEntry.query.all()
     return render_template('list.html', musicList=musicList) #, entryData = EntryData)
 
-@app.route('/addEntry', methods=["POST"])
-def addEntry():
-    try:
-        json_data = request.json['newEntry']
-        songName = json_data[song]
-        artistName = json_data[artist]
-        albumName = json_data[album]
-        yearNum = json_data[year]
-        ratingNum = json_data[rating]
+@app.route("/update", methods=["POST"])
+def update():
+    newname = request.form.get("newname")
+    oldname = request.form.get("oldname")
+    editSelection = MusicEntry.query.filter_by(song=oldname).first()
+    editSelection.title = newname
+    db.session.commit()
+    return redirect("/")
 
-        newMusicEntry = MusicEntry(song=songName, artist=artistName, album=albumName, year=yearNum, rating_0_5=ratingNum)
-        db.session.add(newMusicEntry)
-        db.session.commit()
-        return render_template('list.html', musicList=musicList) #, entryData = EntryData)
-    except Exception(e):
-        return str(e)
-    return 'added'
+@app.route("/delete", methods=["POST"])
+def delete():
+    name = request.form.get("name")
+    editSelection = MusicEntry.query.filter_by(song=name).first()
+    db.session.delete(editSelection)
+    db.session.commit()
+    return redirect("/")
+
+# @app.route('/addEntry', methods=["POST"])
+# def addEntry():
+#     try:
+#         json_data = request.json['newEntry']
+#         songName = json_data[song]
+#         artistName = json_data[artist]
+#         albumName = json_data[album]
+#         yearNum = json_data[year]
+#         ratingNum = json_data[rating]
+#
+#         newMusicEntry = MusicEntry(song=songName, artist=artistName, album=albumName, year=yearNum, rating_0_5=ratingNum)
+#         db.session.add(newMusicEntry)
+#         db.session.commit()
+#         return render_template('list.html', musicList=musicList) #, entryData = EntryData)
+#     except Exception(e):
+#         return str(e)
+#     return 'added'
 
 if __name__ == '__main__':
     app.run(debug=True)
