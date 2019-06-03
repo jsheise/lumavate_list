@@ -1,0 +1,114 @@
+One problem I'm having is using table cells as fields for form entry.
+Temporarily will go with standard form entry method.
+	ng-form directive?
+Update: resolved by moving new entry inputs to outside table. However,
+a form may still be used for the sake of organization.
+
+After being overwhelmed with information regarding how to design back-end
+with Python, going to focus on AngularJS and Angular Material.
+Update: AngularJS front-end done, though will need updating for Flask and
+potentially PostgreSQL back-end.
+
+Initially wanted to do a rating system with stars, but opted for a favorite
+checkmark instead.
+Consider using numbers for rating?
+Also, what if user wants to favorite an entire album?
+	i.e. "sort by best albums"
+
+Try to understand $valid and $invalid for forms more.
+
+***
+Log 19/05/29
+
+	With basic Flask/AngularJS interaction done, time to implement PostgreSQL
+	database!
+
+	Taking tips from tutorial at http://blog.sahildiwan.com/posts/flask-and-postgresql-app-deployed-on-heroku/
+	Intend on diving into more specific documentation as information is required.
+
+	Note that there is currently an issue with duplicate entries being made on an
+	edit.
+	This is likely front-end, though could cause complications with database?
+	Is it just displaying the same thing?
+		i.e. HTML code duplicates it, not actually in Python array?
+			Maybe, but the ng-repeat makes me think otherwise.
+		Any way to inspect array while running server?
+
+***
+Log 19/05/29
+	Note that environment variables defined in venv are only in venv
+	i.e. when printenv used outside of venv, not there
+
+	Do we have to migrate the database so that it's in venv?
+
+	Note that I did have to pip install postgresql for psycopg2-binrary
+
+	I did forget to install flask_migrate, so had to do that!
+
+	When running python manage.py db init, got
+	Traceback (most recent call last):
+  File "manage.py", line 4, in <module>
+    from app import app, db
+  File "/home/jsheise/Desktop/sql_test/app.py", line 8, in <module>
+    app.config.from_object(os.environ['APP_SETTINGS'])
+
+	Solution was to import os in app.py to provide os object
+	Ran command again, got
+	Creating directory /home/jsheise/Desktop/sql_test/migrations ... done
+	Creating directory /home/jsheise/Desktop/sql_test/migrations/versions ... done
+	Generating /home/jsheise/Desktop/sql_test/migrations/env.pyc ... done
+	Generating /home/jsheise/Desktop/sql_test/migrations/README ... done
+	Generating /home/jsheise/Desktop/sql_test/migrations/env.py ... done
+	Generating /home/jsheise/Desktop/sql_test/migrations/script.py.mako ... done
+	Generating /home/jsheise/Desktop/sql_test/migrations/alembic.ini ... done
+	Please edit configuration/connection/logging settings in '/home/jsheise/Desktop/sql_test/migrations/alembic.ini' before proceeding.
+
+	On migrate command, got
+	sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) fe_sendauth: no password supplied
+
+	Having some general database issues
+	Going to remove user jsheise from postgre
+
+	Ran into an issue, in that list_db depends on jsheise user and thus jsheise cannot be removed
+
+	'\l' lists databases and owners (at least from postgre user/role)
+	From this, I see that jsheise user owns both jsheise and list_db databases
+
+	drop database jsheise;
+	drop database list_db;
+	drop user jsheise;
+
+	Now let's start over...
+
+	sudo -u postgres createuser --superuser jsheise
+	Had to enter jsheise Linux sudo pass...
+	sudo -u jsheise createdb psql_test_db
+	Creating a database with the jsheise psql user/role
+
+	Holy moly, after hours of figuring out the issue with the password when trying to migrate,
+	the fix was to use export DATABASE_URL="postgresql:///psql_test_db"
+
+	Apparently... "the answer is to not bother setting the host and port and it works"\
+	"Just avoid the host and it doesn't do the password checking."
+
+	Note: cut -d: -f1 /etc/passwd yields local Linux users, including jsheise and Postgres
+
+	With migrating database in Heroku, get the following on an add
+	(psycopg2.errors.UndefinedTable) relation "books" does not exist LINE 1: INSERT INTO books (name, author, published) VALUES ('this is... ^ [SQL: INSERT INTO books (name, author, published) VALUES (%(name)s, %(author)s, %(published)s) RETURNING books.id] [parameters: {'name': 'this is a test book', 'author': 'me johansen', 'published': '1996-06-28'}] (Background on this error at: http://sqlalche.me/e/f405)
+
+	After running heroku run python manage.py db upgrade --app testappforpsql, get:
+	Book added. book id=1
+
+Log 19/06/02
+	So the data I entered on the test program for postgres actually worked.
+	The thing I was not thinking about was that I needed to inspect the database from the Heroku client.
+
+	i.e. pg:psql --app prod
+	then SELECT * from data_table_name;
+
+	DON'T FORGET THE SEMI-COLONS!
+
+	Now let's adapt this test version to the Lumavate list.
+
+	Also note that I can create a dataclip at data.heroku.com
+	and have it as the above psql command to view the data in the table.

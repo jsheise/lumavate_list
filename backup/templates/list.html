@@ -6,8 +6,8 @@
 	<!-- <script type="text/javascript" src="js/angular.min.js"></script> -->
 	<style>
 
-		[ng\:cloak], [ng-cloak], .ng-cloak {
-		    display: none;
+	[ng\:cloak], [ng-cloak], .ng-cloak {
+	    display: none;
 	  }
 
 		table {
@@ -71,22 +71,20 @@
 			<tr ng-repeat="entry in music">
 				<td ng-show="!entry.edit">{{entry.artist|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.artist"></td>
-
 				<td ng-show="!entry.edit">{{ entry.song|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.song"></td>
-
 				<td ng-show="!entry.edit">{{ entry.album|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.album"></td>
-
 				<td ng-show="!entry.edit">{{ entry.year|angular}}</td>
 				<td ng-show="entry.edit"><input ng-model="entry.year"></td>
 
 				<td ng-show="!entry.edit" ng-if="entry.favorite">&#10004</td>
 				<td ng-show="!entry.edit" ng-if="!entry.favorite">&#160</td>
+
 				<td ng-show="entry.edit"><input  type="checkbox" name="favorite" ng-model="entry.favorite" /></td>
 
-				<td ng-show="!entry.edit"><button class="btn btn-secondary" ng-click="entry.edit = true">Edit</button></td>
-				<!-- <td ng-show="entry.edit"><button class="btn btn-secondary" ng-click="entry.edit = false">Done</button></td> -->
+				<td ng-show="!entry.edit"><button  class="btn btn-secondary" ng-click="entry.edit = true">Edit</button></td>
+				<td ng-show="entry.edit"><button class="btn btn-secondary" ng-click="entry.edit = false">Done</button></td>
 
 				<td ng-show="!entry.edit"><button class="btn btn-secondary" ng-click="deleteEntry(entry)">Delete</button></td>
 			</tr>
