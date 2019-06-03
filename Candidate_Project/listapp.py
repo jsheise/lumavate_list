@@ -70,7 +70,7 @@ def update():
     newname = request.form.get("newname")
     oldname = request.form.get("oldname")
     editSelection = MusicEntry.query.filter_by(song=oldname).first()
-    editSelection.title = newname
+    editSelection.song = newname
     db.session.commit()
     return redirect("/")
 
