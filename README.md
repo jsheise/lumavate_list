@@ -7,7 +7,7 @@ This project currently implements:
  
 AngularJS usage is not implemented in production version, as I could not get interaction between the Javascript front-end and the Flask API to interact. However, I'd like to look into how to achieve this.
  
-Production version available at music-list-app.herokuapp.com
+Production version available [here](music-list-app.herokuapp.com) 
 
 Steps to run (development server):
  - cd into '/Candidate_Project'
