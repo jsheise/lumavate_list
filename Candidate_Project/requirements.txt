@@ -2,7 +2,6 @@ alembic==1.0.10
 attrs==19.1.0
 Click==7.0
 Flask==1.0.3
-flask-heroku==0.1.9
 Flask-Migrate==2.5.2
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.0
@@ -15,7 +14,6 @@ jsonschema==3.0.1
 Mako==1.0.11
 MarkupSafe==1.1.1
 postgres==2.2.2
-psycopg2==2.8.2
 psycopg2-binary==2.8.2
 pyrsistent==0.15.2
 python-dateutil==2.8.0

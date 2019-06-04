@@ -112,3 +112,60 @@ Log 19/06/02
 
 	Also note that I can create a dataclip at data.heroku.com
 	and have it as the above psql command to view the data in the table.
+
+	going to kind of follow the advice of another tutorial at https://dev.to/paultopia/the-easiest-possible-way-to-throw-a-webapp-online-flask--heroku--postgres-185o
+
+	According to another resource, rather than creating database locally and migrating, should be able to use create_all() python method in Heroku CLI
+	Had to install flask_triangle to venv
+
+	Could not create database with Python CLI, so used createdb -u jsheise music_db
+
+	Successfully put basic dev server up with database, but on entry, got:
+	ProgrammingError: (psycopg2.errors.UndefinedTable) relation "music_data" does not exist
+LINE 1: INSERT INTO music_data (song, artist, album, year, rating_0_...
+
+	This is because of the __tablename__ = 'music_data' line that was in the EntryData class.
+
+	However, I then got the following:
+	ProgrammingError: (psycopg2.errors.UndefinedTable) relation "music_entry" does not exist
+	LINE 1: INSERT INTO music_entry (song, artist, album, year, rating_0...
+	                    ^
+
+	[SQL: INSERT INTO music_entry (song, artist, album, year, rating_0_5) VALUES (%(song)s, %(artist)s, %(album)s, %(year)s, %(rating_0_5)s) RETURNING music_entry.id]
+	[parameters: {'rating_0_5': None, 'album': u'Periphery III', 'year': u'2016', 'artist': u'Periphery', 'song': u'Catch Fire'}]
+	(Background on this error at: http://sqlalche.me/e/f405)
+
+	First of all, note the parameters: {'rating_0_5'... It doesn't look like rating saved, which could be due to the __init__ "rating" field in the initializer not matching the database field "rating_0_5"
+
+	NOTE THAT I NEED TO BE OUTSIDE OF VIRTUAL ENVIRONMENT TO COMMIT.
+	or is it just because internet went down again?
+	Looks like the internet went down... Both computers as well.
+
+	Well, focusing on local dev... Turns out there's an outage, so nothing I can do with Heroku.
+
+	Changed class name to MusicDb to see if the problem is in the class vs database Name
+	Doesn't seem so.
+
+	ProgrammingError: (psycopg2.errors.UndefinedTable) relation "music_db" does not exist
+	LINE 1: INSERT INTO music_db (song, artist, album, year, rating_0_5)...
+
+	OH. Is the issue that I'm trying to insert directly into the database, rather than a table?
+	Yeah, that's probably it. Gonna try to return to Python method of database creation.
+
+	Ended up going with migration method of database and table creation, since I couldn't get other methods to work.
+
+	It works beautifully now! The only issue is that rating is not saving properly.
+
+	NOTE: To see new database entries, have to re-run the python app.
+	This is because the query for the data is run once, and so we don't get it until the next run.
+	Possible solution to send the user to a "Thank You!" page?
+		Nope.
+
+	Ratings still not saving properly. Nothing goes into that field, even after naming rating fields the same.
+
+	So at this point, not sure how to use list1.js file to submit to database.
+	i.e. cannot communicate between SQLAlchemy object and $scope logic.
+
+	When finally deploying to Heroku, a big problem was that I had not initalized the git repo in the actual project directory.
+
+	IMPORTANT: When facing issues with tables not found, use the create_all on a script run! INCLUDING ON HEROKU SIDE

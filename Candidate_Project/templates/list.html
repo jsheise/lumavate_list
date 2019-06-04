@@ -8,23 +8,6 @@
 			[ng\:cloak], [ng-cloak], .ng-cloak {
 			    display: none;
 		  }
-
-			/* table {
-			  border: 1px solid black;
-			  width: 100%;
-			  background-color: #CBCBCB;
-			}
-			th {
-			  font-family: Arial;
-				border: 1px solid black;
-				text-align: center;
-			}
-			td {
-			  border: 1px solid black;
-			  text-align: center;
-			  font-family: Arial;
-			  background-color: #ECECEC;
-			} */
 		</style>
 	</head>
   <body>
@@ -39,7 +22,6 @@
 		  <h5 class="my-0 mr-md-auto font-weight-normal">Music List</h5>
 		</div>
 
-
 		<div ng-controller="listCtrl">
 	    <form method="POST" action="/" ng-submit="addEntry2(newEntry)">
 	      <input type="text" placeholder="new entry song" name="newSongName" ng-model="newEntry.song">
@@ -49,7 +31,6 @@
 				<input type="text" placeholder="new entry rating (0-5)" name="newRating" ng-model="newEntry.rating">
 	      <input class="btn btn-primary" type="submit" value="Add">
 	    </form>
-
 
 		<table class="table">
 			<thead>

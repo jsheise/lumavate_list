@@ -8,23 +8,6 @@
 			[ng\:cloak], [ng-cloak], .ng-cloak {
 			    display: none;
 		  }
-
-			/* table {
-			  border: 1px solid black;
-			  width: 100%;
-			  background-color: #CBCBCB;
-			}
-			th {
-			  font-family: Arial;
-				border: 1px solid black;
-				text-align: center;
-			}
-			td {
-			  border: 1px solid black;
-			  text-align: center;
-			  font-family: Arial;
-			  background-color: #ECECEC;
-			} */
 		</style>
 	</head>
   <body>
@@ -42,7 +25,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<!-- add headings for fields -->
 					<th>ID</th>
 					<th>Song</th>
 					<th>Artist</th>
@@ -73,15 +55,6 @@
 			<input name="updatedRating" value="{{editItem.rating_0_5}}">
 			<input type="submit" value="Update">
 		</form>
-
-
-		<!-- <form name="entryForm" ng-submit="addEntry(newEntry)">
-		<input placeholder="new entry artist" type="text" name="artist" ng-model="newEntry.artist" ng-required="true"/>
-		<input placeholder="new entry song" type="text" name="song" ng-model="newEntry.song" ng-required="true"/>
-		<input placeholder="new entry album" type="text" name="album" ng-model="newEntry.album" ng-required="true"/>
-		<input placeholder="new entry year" type="text" name="year" ng-model="newEntry.year" ng-required="true"/>
-		<span style="font-family: Arial;"">favorite? <input type="checkbox" name="favorite" ng-model="newEntry.favorite" /></span>
-		<input type="submit" value="Add" ng-disabled="entryForm.$invalid"/> -->
 
 	</body>
 </html>
